@@ -1,0 +1,16 @@
+{
+  "basics": {
+    "name": "Prénom Nom",
+    "title": "Titre du Profil (ex: Développeur Fullstack)",
+    "email": "votre.email@exemple.com",
+    "linkedin": "https://www.linkedin.com/in/votre-profil/",
+    "location": "Ville, France",
+    "cv_pdf_name": "CV_Votre_Nom.pdf"
+  },
+  "ai_persona": {
+    "bot_name": "Assistant IA",
+    "greeting": "Bonjour ! Je suis l'agent IA de [Votre Nom]. Comment puis-je vous aider aujourd'hui ?",
+    "fun_fact_trigger": "recette de la tarte aux fraises",
+    "fun_fact_content": "Voici ma recette secrète de la tarte aux fraises : [Insérez votre recette ou une anecdote ici] !"
+  }
+}

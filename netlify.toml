@@ -1,0 +1,22 @@
+# Configuration Netlify pour le CV interactif IA
+# Documentation : https://docs.netlify.com/configure-builds/file-based-configuration/
+
+# ─── Build ───────────────────────────────────────────────────────────────────
+[build]
+  # Commande de build : compile le frontend React/Vite
+  command = "npm run build"
+
+  # Dossier contenant les fichiers statiques à déployer sur le CDN
+  publish = "dist"
+
+# ─── Netlify Functions (v2) ───────────────────────────────────────────────────
+[functions]
+  # Bundler recommandé pour TypeScript avec les Functions v2
+  node_bundler = "esbuild"
+
+  # IMPORTANT : inclut les fichiers Markdown et la config IA dans le bundle
+  # de la Function, pour que chat.ts puisse les lire via fs.readFileSync.
+  included_files = [
+    "src/content/**",
+    "ai-config.json"
+  ]
