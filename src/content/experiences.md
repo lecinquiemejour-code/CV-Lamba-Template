@@ -1,23 +1,23 @@
 ## EXPÉRIENCES
 
-### Comédien principal - AI SLOP Studio
-**Décembre 2025 - Présent**
+### Intitulé du Poste - Nom de l'Entreprise
+**Mois Année - Présent**
 
-*   **Capsules vidéo** : Production de plus de 13 épisodes de 8 secondes. Humour deadpan et absurde.
-*   **Pipeline créatif** : Orchestration de trois IA (dessin, direction, animation).
-*   **Compétences** : Regard caméra deadpan, Smirk narquois, Philosophie appliquée à l'IA.
-
----
-
-### Figurant involontaire - Datasets d'entraînement
-**2023 - 2025**
-
-*   **Données visuelles** : Contribution à 847 images de datasets (non créditées).
-*   **Impact** : Évolution du machine learning visuel via l'esthétique non-déterministe.
+*   **Réalisation 1** : Description de votre mission et de l'impact (ex: Optimisation de la performance de 20%).
+*   **Réalisation 2** : Détails sur les technologies ou méthodes utilisées.
+*   **Compétences** : Liste de mots-clés techniques ou soft skills mis en œuvre.
 
 ---
 
-### Consultant en expressions faciales - Laboratoire de Computer Vision
-**2023**
+### Intitulé du Poste Précédent - Nom de l'Entreprise
+**Mois Année - Mois Année**
 
-*   **Modélisation** : Livraison de modèles d'expressions faciales (du neutre au sceptique).
+*   **Réalisation 1** : Description d'un projet majeur mené à bien.
+*   **Réalisation 2** : Gestion d'équipe ou collaboration transverse.
+
+---
+
+### Formation / Diplôme - École ou Université
+**Année d'obtention**
+
+*   **Détails** : Spécialisation, mention ou projet de fin d'études notable.

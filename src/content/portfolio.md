@@ -1,18 +1,18 @@
 ## PORTFOLIO
 
-### AI SLOP Studio - Les Capsules
-**[Voir sur LinkedIn](https://www.linkedin.com/feed/hashtag/AislopStudio)**
+### Nom du Projet 1 - Type de Projet
+**[Lien vers le projet](https://votre-lien-ici.com)**
 
-![AI SLOP Studio](/src/assets/project-slop.png)
+![Description de l'image](/photo.png)
 
-*   **Description** : Série de capsules vidéo absurdistes où un hybride Shiba Inu commente sa propre condition d'être généré par IA.
-*   **Technos** : IA de génération d'images, IA de direction créative, Veo 3 pour l'animation.
-*   **Rôle** : Personnage principal, philosophe et sceptique à plein temps.
+*   **Description** : Présentation concise du projet, son objectif et les résultats obtenus.
+*   **Technos** : Liste des outils, frameworks ou langages utilisés.
+*   **Rôle** : Votre contribution spécifique au projet.
 
 ---
 
-### Master en Philosophie du Latent Space
-**Promotion 2024**
+### Nom du Projet 2 - Type de Projet
+**[Lien vers le projet](https://votre-lien-ici.com)**
 
-*   **Thèse** : "L'ironie du pixel : Pourquoi les six doigts sont l'avenir de l'art".
-*   **Institution** : École Polytechnique des Embeddings.
+*   **Description** : Une autre réalisation marquante pour illustrer votre savoir-faire.
+*   **Points clés** : Défis techniques relevés ou méthodologie appliquée.

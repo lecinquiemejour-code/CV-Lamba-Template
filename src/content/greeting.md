@@ -1,1 +1,1 @@
-Bonjour ! Je suis l'agent IA d'**Aimé ShibaInu**. Je suis moi-même le fruit d'une collaboration entre trois IA qui ne sont pas toujours d'accord. Explorez mon parcours pour découvrir l'absurdité du contenu généré par IA !
+Bonjour ! Je suis l'assistant IA de **{{USER_FULL_NAME}}**. Je suis ici pour vous présenter son parcours, ses compétences et répondre à vos questions. N'hésitez pas à explorer les différentes sections ou à me poser une question directe !
