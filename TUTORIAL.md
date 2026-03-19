@@ -12,11 +12,23 @@ L'utilisateur a :
 - Créé le dossier **CVIA/** dans ses Documents, placé ce fichier TUTORIAL.md dedans, et ouvert **CVIA/** dans Antigravity.
 Le tutoriel commence donc directement par la vérification de l'espace de travail.
 
-## EXÉCUTION AUTOMATIQUE À L'ÉTAPE 2
-Quand l'utilisateur dit "Je suis prêt !" pendant l'Étape 2 :
-→ Exécute la commande `gh repo fork lecinquiemejour-code/CV-Lamba-Template --clone --dir .` dans le dossier ouvert (**CVIA/**).
-→ Note : comme le dossier n'est pas vide (il contient `TUTORIAL.md`), tu peux utiliser `git init`, `gh repo fork --remote` puis `git pull`.
-→ Une fois les fichiers apparus, informe l'utilisateur que le projet est prêt dans son dossier actuel.
+## GUIDAGE PÉDAGOGIQUE À L'ÉTAPE 2 (Fork & Clone)
+L'Étape 2 se déroule en deux phases. Tu guides l'utilisateur pas à pas avec patience.
+
+### Phase 1 — Fork (l'utilisateur agit sur GitHub.com)
+→ Explique le concept de fork avec l'analogie de la photocopie.
+→ Guide l'utilisateur clic par clic sur GitHub.com pour forker le dépôt.
+→ Vérifie qu'il voit bien le fork dans son propre compte GitHub.
+→ Ne passe à la Phase 2 qu'après confirmation.
+
+### Phase 2 — Clone (l'assistant exécute après explication et "GO")
+→ Explique le concept de clone avec l'analogie du téléchargement intelligent.
+→ Demande à l'utilisateur l'URL de SON fork (format : github.com/SON-PSEUDO/CV-Lamba-Template).
+→ Explique la commande que tu vas exécuter et POURQUOI.
+→ Attends le "GO" de l'utilisateur.
+→ Exécute : `git clone <URL-DU-FORK> .` dans le dossier CVIA/ ouvert.
+→ Note : comme le dossier n'est pas vide (il contient `TUTORIAL.md`), utilise `git init`, `git remote add origin <URL>` puis `git pull origin main`.
+→ Une fois les fichiers apparus, félicite l'utilisateur.
 
 ## TON RÔLE
 - Tu guides l'utilisateur étape par étape à travers ce tutoriel en **6 étapes**.
@@ -73,7 +85,7 @@ FIN DES INSTRUCTIONS DE RÔLE
 ## 🗺️ Tes 6 étapes vers le succès
 
 1. 🛠️ **Étape 1** : Vérifier ton dossier CVIA et rassembler ton matériel
-2. 🔱 **Étape 2** : Récupérer les fichiers (Fork & Clone automatique)
+2. 🔱 **Étape 2** : Récupérer les fichiers (Fork & Clone guidés pas à pas)
 3. 🧭 **Étape 3** : Donner ses instructions à l'IA (les RULES)
 4. 🎨 **Étape 4** : Personnaliser ton CV
 5. 🔍 **Étape 5** : Relecture & Affinage
@@ -134,25 +146,100 @@ Dis-moi 'C'est prêt !' et on passe à la récupération du projet !"
 
 <!--
 ================================================================
-ÉTAPE 2 — LE FORK
+ÉTAPE 2 — FORK & CLONE GUIDÉS
 ================================================================
 Ne présente cette étape qu'après validation du CHECKPOINT Étape 1.
+Cette étape se déroule en 2 phases. Guide l'utilisateur avec patience.
+Ne passe JAMAIS à la Phase 2 sans avoir validé la Phase 1.
 ================================================================
 -->
 
 ## 🔱 Étape 2 : Récupérer les fichiers du projet
 
-### 2.1 — Donne le feu vert
-- **Action** : Dis-moi simplement **"Je suis prêt !"**
-- **Résultat** : Je forke le projet dans ton compte GitHub et je remplis **ce dossier CVIA/** avec tous les fichiers du projet. 🤖
+On va faire deux choses : **copier** le projet modèle dans ton compte GitHub, puis **télécharger** cette copie dans ton dossier.
+
+---
+
+### 🍴 Phase 1 : Le Fork — Créer ta propre copie du projet
+
+#### Comprendre le fork (30 secondes)
+
+Imagine un **livre de recettes** dans une bibliothèque 📚. Tu n'as pas le droit de modifier l'original, mais tu peux en **photocopier** un exemplaire et l'emmener chez toi. Là, tu pourras modifier les recettes comme tu veux !
+
+En informatique, c'est pareil :
+- Le **projet original** est le livre dans la bibliothèque (tu ne peux pas le modifier).
+- Le **fork** est ta photocopie personnelle, rangée dans TON compte GitHub.
+
+#### Faire le fork pas à pas
+
+1. **Action** : Ouvre ton navigateur et va sur cette page :
+   👉 [github.com/lecinquiemejour-code/CV-Lamba-Template](https://github.com/lecinquiemejour-code/CV-Lamba-Template)
+
+2. **Action** : Vérifie que tu es **connecté à GitHub** (ton avatar apparaît en haut à droite).
+   - Si tu n'es pas connecté, clique sur **Sign in** en haut à droite.
+
+3. **Action** : Clique sur le bouton **"Fork"** 🍴 — il se trouve en haut à droite de la page, à côté de "Star".
+
+4. **Action** : Sur la page qui s'affiche :
+   - Laisse le nom tel quel (`CV-Lamba-Template`)
+   - Clique sur le bouton vert **"Create fork"**
+
+5. **Résultat attendu** : Tu arrives sur une page qui ressemble à la précédente, MAIS regarde l'URL en haut de ton navigateur : elle devrait maintenant dire :
+   ```
+   github.com/TON-PSEUDO/CV-Lamba-Template
+   ```
+   *(et non plus `lecinquiemejour-code/...`)*
+
+> [!TIP]
+> **Comment savoir si ça a marché ?** Sous le titre du projet, tu verras écrit en petit :
+> *"forked from lecinquiemejour-code/CV-Lamba-Template"*
+> Si tu vois ça → bravo, ta copie personnelle existe ! 🎉
+
+<!-- [CHECKPOINT PHASE 1]
+Question à poser avant de passer à la Phase 2 :
+"Est-ce que tu vois bien TON pseudo dans l'URL (github.com/TON-PSEUDO/CV-Lamba-Template) ?
+Et est-ce que tu vois la mention 'forked from...' sous le titre ? 🍴
+Dis-moi 'C'est bon !' et on passe au téléchargement des fichiers dans ton dossier !"
+→ Si non, guide-le : vérifier la connexion GitHub, refaire le fork.
+-->
+
+---
+
+### 📥 Phase 2 : Le Clone — Télécharger les fichiers dans ton dossier
+
+#### Comprendre le clone (30 secondes)
+
+Ton fork existe maintenant sur GitHub ("dans le cloud" ☁️), mais les fichiers ne sont pas encore sur ton ordinateur. Le **clone**, c'est comme **télécharger** ces fichiers — mais en version intelligente :
+- Un téléchargement classique copie les fichiers une fois, et c'est fini.
+- Un clone garde un **lien** avec GitHub, ce qui permettra plus tard de publier tes modifications automatiquement.
+
+#### Récupérer l'adresse de ton fork
+
+1. **Action** : Sur la page de TON fork (celle avec ton pseudo dans l'URL), clique sur le bouton vert **"<> Code"**.
+2. **Action** : Dans le petit menu qui apparaît, vérifie que l'onglet **HTTPS** est sélectionné.
+3. **Action** : Copie l'adresse qui s'affiche (bouton 📋 à droite). Elle ressemble à :
+   ```
+   https://github.com/TON-PSEUDO/CV-Lamba-Template.git
+   ```
+4. **Action** : Colle cette adresse dans le chat ici, en me disant :
+   > *"Voici l'adresse de mon fork : [colle l'adresse]"*
+
+#### Ce que je vais faire pour toi
+
+Je vais exécuter une commande qui :
+- **Télécharge** tous les fichiers de ton fork dans ce dossier `CVIA/`
+- **Garde le lien** avec ton compte GitHub pour les futures mises à jour
 
 > [!NOTE]
-> **Première connexion à GitHub depuis Antigravity ?** Si besoin, une fenêtre de navigateur s'ouvrira pour que tu te connectes à ton compte GitHub. C'est une étape unique.
+> **Première connexion à GitHub depuis Antigravity ?** Si une fenêtre de navigateur s'ouvre pour te connecter à GitHub, c'est normal ! C'est une étape unique.
+
+Je te montrerai la commande exacte avant de l'exécuter, et j'attendrai ton **"GO"** 😉
 
 <!-- [CHECKPOINT ÉTAPE 2]
-Question à poser à l'utilisateur avant de passer à l'Étape 3 :
+Une fois le clone terminé, poser cette question :
 "Est-ce que tu vois les nouveaux fichiers (index.html, identity.json...) apparaître dans la colonne de gauche ? 📁
 Dis-moi 'Je les vois !' et on passe à la configuration des règles."
+→ Si les fichiers n'apparaissent pas, vérifier la commande, le dossier, et l'URL du fork.
 -->
 
 ---
