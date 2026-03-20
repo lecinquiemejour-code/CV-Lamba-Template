@@ -14,10 +14,10 @@ Crée ton propre CV intelligent en ligne, propulsé par l'IA Google Gemini.
 | Couche | Technologies |
 |---|---|
 | **Frontend** | React · Vite · TailwindCSS |
-| **Backend** | Netlify Functions · Express |
+| **Backend** | Netlify Functions |
 | **IA** | Google Gemini API |
 | **Hébergement** | Netlify |
-| **Outils** | Git · Node.js · GitHub CLI |
+| **Outils** | Antigravity · Git · Node.js · GitHub CLI |
 
 ## 🏁 Comment commencer
 
