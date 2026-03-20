@@ -12,6 +12,16 @@ L'utilisateur a :
 - Créé le dossier **CVIA/** dans ses Documents, placé ce fichier TUTORIAL.md dedans, et ouvert **CVIA/** dans Antigravity.
 Le tutoriel commence donc directement par la vérification de l'espace de travail.
 
+## DOUBLE OBJECTIF DU TUTORIEL
+Ce tutoriel poursuit deux objectifs complémentaires :
+1. **Découvrir le VibeCoding avec Antigravity** — l'utilisateur apprend à collaborer
+   avec une IA pour créer un projet concret, sans écrire de code lui-même.
+2. **Créer son propre CV Interactif IA** — à la fin du tutoriel, il dispose d'un
+   assistant CV intelligent, personnalisé et déployé en ligne.
+
+Garde toujours ces deux dimensions en tête : chaque étape est à la fois un
+apprentissage (comment travailler avec l'IA) et un résultat concret (un CV qui avance).
+
 ## GUIDAGE PÉDAGOGIQUE — Étape 2 (Template), 3 (Rules), 4 (Outils) & 5 (Clone)
 L'installation se déroule en quatre étapes clés. Tu guides l'utilisateur pas à pas.
 
@@ -396,6 +406,21 @@ Si un outil manque, je vais essayer de l'installer automatiquement grâce à `wi
 
 - **Action** : Une fois installé, reviens me dire **« C'est installé ! »** et je revérifie.
 
+<!-- [DIAGNOSTIC ÉTAPE 4 — GUIDE POUR L'IA]
+Si l'utilisateur est bloqué sur l'installation, diagnostique avec ce tableau :
+
+| Symptôme | Cause probable | Solution |
+|---|---|---|
+| `winget` non reconnu | Windows trop ancien ou Microsoft Store absent | Donner le lien de téléchargement manuel |
+| `git --version` ne marche pas après install | PATH non mis à jour | Fermer et rouvrir Antigravity (rappeler que c'est obligatoire) |
+| Version trop ancienne (Node < 18) | Installation précédente obsolète | Désinstaller l'ancienne version, réinstaller via les liens manuels |
+| Erreur de proxy ou timeout | Réseau d'entreprise avec proxy | Demander à l'utilisateur s'il est sur un réseau d'entreprise, suggérer un réseau personnel |
+| "Accès refusé" ou droits insuffisants | Pas les droits admin | Suggérer de faire un clic droit → "Exécuter en tant qu'administrateur" sur Antigravity |
+
+Si après 15 minutes l'installation est toujours bloquée, rassure l'utilisateur :
+"C'est un problème de configuration machine, pas de ta faute ! Contacte ton formateur ou reviens avec un autre ordinateur."
+-->
+
 <!-- [CHECKPOINT ÉTAPE 4]
 Vérifier que les 3 outils retournent un numéro de version.
 "Les 3 outils sont validés ✅ ?
@@ -443,7 +468,23 @@ Je te montrerai la commande exacte avant de l'exécuter, et j'attendrai ton **"G
 <!-- [CHECKPOINT ÉTAPE 5]
 Une fois le clone terminé, poser cette question :
 "Est-ce que tu vois les nouveaux fichiers (index.html, identity.json...) apparaître dans la colonne de gauche ? 📁
-Dis-moi 'Je les vois !' et on passe à la personnalisation de ton CV."
+Dis-moi 'Je les vois !' et on installe les pièces détachées du projet."
+-->
+
+### 5.2 — Installer les pièces détachées (`npm install`)
+
+Tes fichiers sont là, mais le projet a besoin de **pièces détachées** pour fonctionner — ce sont les composants React, Vite, et tous les outils qui font tourner ton site. C'est comme si tu avais reçu ta maison en kit : il faut encore déballer les caisses de matériaux.
+
+- **Action** : Dis-moi **« Installe les dépendances »** et je lance la commande `npm install` pour toi.
+- **Résultat attendu** : Un nouveau dossier `node_modules/` apparaît. C'est l'étagère remplie de pièces — tu n'auras jamais besoin d'y toucher.
+
+> [!NOTE]
+> Cette étape peut prendre 1-2 minutes (téléchargement depuis Internet). C'est normal si tu vois beaucoup de texte défiler !
+
+<!-- [CHECKPOINT ÉTAPE 5.2]
+Poser cette question après npm install :
+"Le dossier node_modules/ est apparu dans la colonne de gauche ? 📦
+Dis-moi 'C'est installé !' et on passe à l'activation du chatbot puis à la personnalisation !"
 -->
 
 ---
@@ -461,6 +502,25 @@ Si l'utilisateur donne sa clé API, installe-la directement dans le fichier .env
 ## 🎨 Étape 6 : Personnaliser ton CV
 
 C'est ici que l'aventure devient concrète. **Tu n'as pas besoin d'ouvrir les fichiers toi-même — je le fais pour toi.**
+
+### 6.0 — Activer le cerveau du chatbot (clé API)
+
+Avant de personnaliser, activons le **cerveau** de ton chatbot. Comme ça, quand tu testeras ton CV en prévisualisation, le chatbot répondra déjà !
+
+La clé API est un code secret qui permet à ton site de communiquer avec l'intelligence artificielle de Google.
+
+**Créer ta clé sur Google AI Studio :**
+- **Action** : Va sur [Google AI Studio](https://aistudio.google.com/) et connecte-toi avec ton compte Google.
+- **Action** : Dans le menu à gauche, clique sur **Get API key**, puis sur **Create API key**.
+- **Action** : Copie précieusement ce long code — c'est ta clé, garde-la secrète.
+
+> [!IMPORTANT]
+> **Ta clé API est secrète.** Ne la partage jamais publiquement (pas dans un message, pas sur GitHub).
+
+**Installer la clé dans ton projet :**
+- **Action** : Dans le chat Antigravity, dis-moi :
+  > *"Voici ma clé API Google : [colle ta clé]. Peux-tu l'installer dans le projet ?"*
+- **Résultat** : J'ajoute ta clé dans le fichier `.env` du projet — le chatbot sera actif dès la prévisualisation locale. 🤖
 
 ### 6.1 — L'astuce "Gain de temps" ⚡
 Si tu as un ancien CV en PDF, commence par ça !
@@ -564,14 +624,23 @@ Pour chaque point qui te semble perfectible, utilise ce process :
 > Il n'y a pas de limite au nombre d'itérations. Prends le temps qu'il faut. Le déploiement attendra !
 
 <!-- [CHECKPOINT ÉTAPE 7]
-Questions à poser DANS L'ORDRE à l'utilisateur avant de passer à l'Étape 8 :
+Questions à poser DANS L'ORDRE à l'utilisateur avant de passer à l'Étape 8.
+Pour chaque dimension, AVANT de poser la question, lis le CV en prévisualisation et
+prépare un mini-feedback qualitatif (une observation concrète, pas un score).
+Exemple : "J'ai remarqué que ta section Expériences est très factuelle — veux-tu
+ajouter un résultat chiffré ou un impact concret ?"
+
 1. "Commençons par le TON 🎙️ : Est-ce que tes textes te ressemblent ? Y a-t-il une formulation qui sonne faux ?"
-   → Si oui, propose de corriger maintenant. Si non, passe à la question suivante.
+   → Donne ton observation sur le ton AVANT de poser la question.
+   → Si l'utilisateur veut corriger, propose de le faire maintenant. Si non, passe à la suite.
 2. "Maintenant le CONTENU 📋 : Est-ce qu'il manque une expérience, une compétence ou un projet important ?"
-   → Si oui, propose de l'ajouter. Si non, passe à la question suivante.
+   → Signale si tu repères des trous évidents (ex : pas de dates, pas de résultats chiffrés).
+   → Si oui, propose de l'ajouter. Si non, passe à la suite.
 3. "La STRUCTURE 🗂️ : Est-ce que l'ordre des sections te semble logique et facile à parcourir ?"
-   → Si non, propose de réorganiser. Si oui, passe à la question suivante.
+   → Commente l'enchaînement des sections (ex : "ton parcours va du plus ancien au plus récent, c'est un choix — veux-tu inverser ?").
+   → Si non, propose de réorganiser. Si oui, passe à la suite.
 4. "L'IMPACT 🎯 : Si tu étais recruteur, est-ce que ça t'aurait donné envie de prendre contact ?"
+   → Donne ton impression globale (ex : "le premier paragraphe accroche bien" ou "il manque un élément différenciant").
    → Si doutes, invite à ajuster. Sinon :
 "Parfait ! Ton CV est prêt pour le grand saut 🚀 Dis-moi 'Je suis satisfait !' et on passe à la mise en ligne."
 -->
@@ -603,22 +672,12 @@ Avant de publier quoi que ce soit, on s'assure que ton ordinateur est autorisé 
 > [!NOTE]
 > C'est une étape unique. Une fois connecté, tu n'auras plus à le refaire.
 
-### 8.1 — Créer et récupérer ta clé API Google
+### 8.1 — Rappel : ta clé API pour Netlify
 
-C'est le moment d'activer le cerveau de ton chatbot. La clé API est un code secret qui permet à ton CV en ligne de communiquer avec l'IA de Google.
+Tu as créé ta clé API à l'Étape 6.0 et elle fonctionne déjà en local. Pour que le chatbot marche aussi **en ligne**, il faudra la renseigner dans Netlify (voir l'étape 8.3, point 4).
 
-**Créer ta clé sur Google AI Studio :**
-- **Action** : Va sur [Google AI Studio](https://aistudio.google.com/) et connecte-toi avec ton compte Google.
-- **Action** : Dans le menu à gauche, clique sur **Get API key**, puis sur **Create API key**.
-- **Action** : Copie précieusement ce long code — c'est ta clé, garde-la secrète.
-
-> [!IMPORTANT]
-> **Ta clé API est secrète.** Ne la partage jamais publiquement (pas dans un message, pas sur GitHub).
-
-**Installer la clé dans ton projet :**
-- **Action** : Dans le chat Antigravity, dis-moi :
-  > *"Voici ma clé API Google : [colle ta clé]. Peux-tu l'installer dans le projet ?"*
-- **Résultat** : J'ajoute ta clé dans le fichier `.env` du projet — le chatbot sera actif en prévisualisation locale. 🤖
+> [!TIP]
+> **Tu ne retrouves plus ta clé ?** Retourne sur [Google AI Studio](https://aistudio.google.com/) → **Get API key** pour la retrouver ou en créer une nouvelle.
 
 ### 8.2 — Publier ton code sur GitHub
 
@@ -648,6 +707,19 @@ C'est le moment magique : ton CV va devenir accessible au monde entier 🌍
 > 1. 📸 Les **photos** s'affichent correctement
 > 2. 🤖 Le **chatbot** répond (pose-lui une question !)
 > 3. 📄 Le **PDF** se télécharge bien
+
+<!-- [DÉPANNAGE POST-DÉPLOIEMENT — GUIDE POUR L'IA]
+Si la vérification post-déploiement échoue, diagnostique avec ce tableau :
+
+| Symptôme | Cause probable | Solution |
+|---|---|---|
+| 📸 Photos cassées (icône brisée) | Fichier pas dans `public/` ou nom incorrect dans `identity.json` | Vérifier que le fichier est bien dans `public/` et que le nom dans `identity.json` correspond exactement (avec extension) |
+| 🤖 Chatbot ne répond pas | Variable `API_KEY` absente ou mal nommée dans Netlify | Guider l'utilisateur : Netlify → Site settings → Environment variables → vérifier que la clé s'appelle exactement `API_KEY` |
+| 📄 PDF ne se télécharge pas | Fichier pas dans `public/` ou nom incorrect dans `identity.json` | Même logique que les photos : vérifier `public/` et `cv_pdf_name` dans `identity.json` |
+| Build Netlify échoue | Erreur dans les Netlify Functions ou dépendance manquante | Demander à l'utilisateur d'aller dans Netlify → Deploys → cliquer sur le deploy en erreur → lire le log |
+
+Rassure toujours l'utilisateur : ces erreurs sont classiques et se corrigent en quelques clics.
+-->
 
 <!-- [CHECKPOINT ÉTAPE 8]
 Message à afficher après le déploiement réussi :
@@ -683,6 +755,16 @@ Le PDCA (Plan-Do-Check-Act) est une méthode d'amélioration continue inventée 
 | **D (Do)** | Tu me décris ce que tu veux | Je génère le code, tu valides avec **"GO"** |
 | **C (Check)** | Tu vérifies en prévisualisation | Je pousse vers GitHub → Netlify met à jour (30-60 sec) |
 | **A (Act)** | C'est bon ? → Suite ! Pas parfait ? → On ajuste ! | Je corrige |
+
+### 9.1bis — Le réflexe de non-régression
+
+Après chaque mise à jour poussée en ligne, prends 30 secondes pour faire un **check rapide** :
+
+1. 📸 Les **photos** s'affichent
+2. 🤖 Le **chatbot** répond
+3. 📄 Le **PDF** se télécharge
+
+C'est la **non-régression** : s'assurer que ce qui marchait avant marche encore après ta modification. Si un des 3 points est cassé, dis-le-moi — c'est généralement corrigé en 2 minutes.
 
 ### 9.2 — Exemples concrets
 
