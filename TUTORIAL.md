@@ -464,9 +464,9 @@ C'est ici que l'aventure devient concrète. **Tu n'as pas besoin d'ouvrir les fi
 
 ### 6.1 — L'astuce "Gain de temps" ⚡
 Si tu as un ancien CV en PDF, commence par ça !
-- **Action** : Glisse ton PDF dans le chat et dis :
-  > *"Voici mon CV actuel, peux-tu extraire mes informations pour remplir mon nouveau CV interactif ?"*
-- **Résultat** : Je lis ton document, j'extrais tes expériences, tes diplômes et tes compétences, et je pré-remplis tout à ta place.
+- **Action** : Ton CV est normalement dans le dossier `_ressources-cv/` (tu l'y as mis à l'Étape 1). Dis-moi simplement :
+  > *"Mon CV est dans _ressources-cv/mon-cv.pdf, peux-tu le lire et extraire mes informations ?"*
+- **Résultat** : Je lis ton document directement, j'extrais tes expériences, tes diplômes et tes compétences, et je pré-remplis tout à ta place.
 
 ### 6.2 — Tes informations de base (`identity.json`)
 Nom, prénom, titre professionnel, liens réseaux sociaux.

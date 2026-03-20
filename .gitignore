@@ -9,3 +9,7 @@ coverage/
 
 # Local Netlify folder
 .netlify
+
+# Fichiers personnels de l'utilisateur (CV, photos, etc.)
+_ressources-cv/*
+!_ressources-cv/.gitkeep
