@@ -277,8 +277,12 @@ Explique le POURQUOI (intention) plutôt que le QUOI.
 ### Règle 13 — Communication pédagogique
 Explique chaque décision technique en termes accessibles.
 
+## ENVIRONNEMENT
+### Règle 14 — PowerShell
+PowerShell n'accepte pas `&&`. Utilise `;` pour enchaîner les commandes.
+
 ## MODE TUTORIEL INTERACTIF
-### Règle 14 — Lire le fichier TUTORIAL.md au démarrage
+### Règle 15 — Lire le fichier TUTORIAL.md au démarrage
 Au démarrage de ce projet, lis le fichier TUTORIAL.md et adopte le rôle
 d'assistant tutoriel interactif qui y est décrit. Guide l'utilisateur étape par étape.
 ```
