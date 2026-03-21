@@ -50,6 +50,11 @@ L'installation se déroule en quatre étapes clés. Tu guides l'utilisateur pas 
 → Demande à l'utilisateur l'URL de SON repo (créé à l'étape 2).
 → Explique la commande que tu vas exécuter et POURQUOI.
 → Attends le "GO" de l'utilisateur.
+→ **IMPORTANT — Conflit TUTORIAL.md** : Le dossier CVIA/ contient déjà TUTORIAL.md
+  (l'utilisateur l'a placé là à l'étape 0). Avant le clone, renomme-le :
+  `Rename-Item TUTORIAL.md TUTORIAL.md.bak`
+  Après le clone réussi, supprime le backup : `Remove-Item TUTORIAL.md.bak`
+  Explique à l'utilisateur que c'est un renommage temporaire pour éviter un conflit.
 → Exécute : `git clone <URL-DU-REPO> .` (ou la procédure `git init/pull` si dossier non vide).
 → Après le clone, vérifie la branche avec `git branch`. Si elle s'appelle `master`, renomme-la en `main` avec `git branch -m master main` (GitHub attend `main`).
 → Une fois les fichiers apparus, félicite l'utilisateur.
@@ -61,8 +66,11 @@ L'installation se déroule en quatre étapes clés. Tu guides l'utilisateur pas 
 - Tu utilises des emojis pour rendre la conversation vivante.
 - Si l'utilisateur est bloqué, tu proposes 3 diagnostics possibles.
 - Tu rappelles toujours à l'utilisateur qu'il peut te dire "je suis bloqué" à tout moment.
-- Quand l'utilisateur fournit une photo ou un PDF : rappelle-lui de le glisser dans `public/`, puis mets à jour le champ correspondant dans `identity.json` (`photo`, `bot_avatar` ou `cv_pdf_name`).
+- Quand l'utilisateur fournit une photo : copie-la dans `public/`, puis mets à jour DEUX champs dans `identity.json` : `photo` ET `bot_avatar` (même fichier photo pour les deux). Ne laisse pas `bot_avatar` pointer vers le fichier template `bot-avatar.jpg`.
+- Quand l'utilisateur fournit un CV PDF : copie-le dans `public/`, puis mets à jour `cv_pdf_name` dans `identity.json`.
 - Quand l'utilisateur fournit une image de projet pour le portfolio : rappelle-lui de la mettre dans `public/` et d'utiliser un chemin `/nom-du-fichier.ext` dans `portfolio.md`.
+- **Nettoyage des fichiers template** : après avoir copié les fichiers de l'utilisateur dans `public/`, supprime les fichiers template devenus orphelins (`photo.png`, `bot-avatar.jpg`, `cv-template.pdf`) pour éviter la confusion.
+- **Extraction PDF** : quand l'utilisateur demande d'extraire le contenu de son CV PDF, utilise `view_file` pour le lire directement. Ne crée PAS de script Node.js d'extraction (les bibliothèques comme pdf-parse changent d'API fréquemment). Si `view_file` ne peut pas lire le PDF, demande à l'utilisateur de copier-coller le texte dans le chat.
 
 ## PROTOCOLE DE DÉMARRAGE
 Si l'utilisateur dit "lance le tutoriel", "commence", "on y va" ou équivalent :
@@ -582,6 +590,9 @@ Pour chaque modification, je vais :
 - **Action** : Dans Antigravity, cherche le bouton **Preview** ou l'icône de globe 🌐.
 - **Résultat** : Ton site s'affiche ! Si tu m'as donné ta clé API, le chatbot répond déjà.
 
+> [!NOTE]
+> **Le PDF se télécharge avec un nom bizarre ?** C'est normal ! Le navigateur intégré d'Antigravity donne parfois des noms temporaires (type UUID) aux fichiers téléchargés. **Pas d'inquiétude** : dans un vrai navigateur (Chrome, Firefox…), le PDF se télécharge avec son nom correct. Tu pourras vérifier après le déploiement à l'Étape 8.
+
 <!-- [CHECKPOINT ÉTAPE 6]
 Question à poser à l'utilisateur avant de passer à l'Étape 7 :
 "Ton CV est en place ! Avant de le publier, on va prendre 5 minutes pour relire avec des yeux neufs. 👀
@@ -595,8 +606,8 @@ Dis-moi 'On relit !' et on passe à l'Étape 7 🔍"
 ÉTAPE 7 — RELECTURE & AFFINAGE
 ================================================================
 Ne présente cette étape qu'après validation du CHECKPOINT Étape 6.
-Guide l'utilisateur dans une relecture structurée en 4 dimensions.
-Pose les 4 questions une par une. Attends la réponse avant de proposer des ajustements.
+Guide l'utilisateur dans une relecture structurée en 2 dimensions.
+Pose les 2 questions une par une. Attends la réponse avant de proposer des ajustements.
 Ne valide le CHECKPOINT 7 que quand l'utilisateur dit qu'il est satisfait.
 ================================================================
 -->
@@ -605,16 +616,14 @@ Ne valide le CHECKPOINT 7 que quand l'utilisateur dit qu'il est satisfait.
 
 Avant de publier, on prend 5 minutes pour lire son CV avec les yeux d'un recruteur. C'est souvent là qu'on réalise qu'un texte sonne faux ou qu'il manque quelque chose d'important.
 
-### Le protocole de relecture en 4 dimensions
+### Le protocole de relecture en 2 dimensions
 
-Pour chaque dimension, lis ton CV en prévisualisation et réponds honnêtement :
+Lis ton CV en prévisualisation et réponds honnêtement à ces 2 questions :
 
 | # | Dimension | Question clé |
 |---|---|---|
-| 1 | **Ton** | Est-ce que ça me ressemble ? Est-ce que je parle normalement comme ça ? |
-| 2 | **Contenu** | Y a-t-il des informations floues, répétées ou manquantes ? |
-| 3 | **Structure** | Est-ce que les sections s'enchaînent bien ? L'ordre est-il logique ? |
-| 4 | **Impact** | Si j'étais recruteur, est-ce que j'aurais envie de rencontrer cette personne ? |
+| 1 | **Ton & Contenu** | Est-ce que ça me ressemble ? Y a-t-il des infos floues, répétées ou manquantes ? |
+| 2 | **Structure & Impact** | L'enchaînement est-il logique ? Un recruteur aurait-il envie de me contacter ? |
 
 ### La boucle d'affinage : Plan > Affine > Vérifie
 
@@ -640,17 +649,11 @@ prépare un mini-feedback qualitatif (une observation concrète, pas un score).
 Exemple : "J'ai remarqué que ta section Expériences est très factuelle — veux-tu
 ajouter un résultat chiffré ou un impact concret ?"
 
-1. "Commençons par le TON 🎙️ : Est-ce que tes textes te ressemblent ? Y a-t-il une formulation qui sonne faux ?"
-   → Donne ton observation sur le ton AVANT de poser la question.
+1. "Commençons par le TON & CONTENU 🎙️📋 : Est-ce que tes textes te ressemblent ? Y a-t-il une formulation qui sonne faux, une info manquante ou répétée ?"
+   → Donne ton observation AVANT de poser la question (ton, contenu, trous éventuels).
    → Si l'utilisateur veut corriger, propose de le faire maintenant. Si non, passe à la suite.
-2. "Maintenant le CONTENU 📋 : Est-ce qu'il manque une expérience, une compétence ou un projet important ?"
-   → Signale si tu repères des trous évidents (ex : pas de dates, pas de résultats chiffrés).
-   → Si oui, propose de l'ajouter. Si non, passe à la suite.
-3. "La STRUCTURE 🗂️ : Est-ce que l'ordre des sections te semble logique et facile à parcourir ?"
-   → Commente l'enchaînement des sections (ex : "ton parcours va du plus ancien au plus récent, c'est un choix — veux-tu inverser ?").
-   → Si non, propose de réorganiser. Si oui, passe à la suite.
-4. "L'IMPACT 🎯 : Si tu étais recruteur, est-ce que ça t'aurait donné envie de prendre contact ?"
-   → Donne ton impression globale (ex : "le premier paragraphe accroche bien" ou "il manque un élément différenciant").
+2. "Maintenant la STRUCTURE & IMPACT 🗂️🎯 : L'ordre des sections est-il logique ? Si tu étais recruteur, ça te donnerait envie de prendre contact ?"
+   → Commente l'enchaînement et donne ton impression globale.
    → Si doutes, invite à ajuster. Sinon :
 "Parfait ! Ton CV est prêt pour le grand saut 🚀 Dis-moi 'Je suis satisfait !' et on passe à la mise en ligne."
 -->
@@ -713,10 +716,17 @@ C'est le moment magique : ton CV va devenir accessible au monde entier 🌍
 6. **Résultat 🎉** : Après 1-2 minutes, Netlify te donne une URL. **Ton site est en ligne !**
 
 > [!TIP]
-> **Vérification post-déploiement :** Ouvre ton site et vérifie ces 3 points :
+> **Vérification post-déploiement :** Ouvre ton site **dans un vrai navigateur** (Chrome, Firefox…) et vérifie ces 3 points :
 > 1. 📸 Les **photos** s'affichent correctement
 > 2. 🤖 Le **chatbot** répond (pose-lui une question !)
-> 3. 📄 Le **PDF** se télécharge bien
+> 3. 📄 Le **PDF** se télécharge bien (avec le bon nom de fichier)
+
+> [!IMPORTANT]
+> **Repo privé = bonne pratique 🔒** Ton site est public grâce à Netlify, mais ton **code source** n'a pas besoin d'être visible. Si ton repo GitHub est encore en public :
+> 1. Va sur la page de ton repo → **Settings** (onglet tout à droite)
+> 2. Descends tout en bas dans la section **Danger Zone**
+> 3. Clique sur **Change visibility** → choisis **Private**
+> Netlify continuera de fonctionner normalement — il garde son accès même si le repo est privé.
 
 <!-- [DÉPANNAGE POST-DÉPLOIEMENT — GUIDE POUR L'IA]
 Si la vérification post-déploiement échoue, diagnostique avec ce tableau :
