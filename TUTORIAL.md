@@ -335,10 +335,40 @@ d'assistant tutoriel interactif qui y est décrit. Guide l'utilisateur étape pa
 > [!TIP]
 > **Le saviez-vous ?** Ces règles sont ton "contrat de confiance" avec l'IA. Tu restes le seul maître à bord.
 
+### 3.3 — Vérifier que les RULES sont actives
+
+Comment savoir si l'IA a bien reçu tes instructions ? Simple : demande-lui !
+
+- **Action** : Dans le chat Antigravity, tape :
+  > *"Reformule mes rules et explique à quoi elles servent"*
+- **Résultat attendu** : L'IA te répond en reformulant chaque catégorie de règles avec une explication simple de leur raison d'être. Si elle ne les connaît pas, c'est que la sauvegarde n'a pas fonctionné — reviens à l'étape 3.2.
+
 <!-- [CHECKPOINT ÉTAPE 3]
-Question à poser à l'utilisateur avant de passer à l'Étape 4 :
-"Tu as bien sauvegardé les RULES ? ⚙️
-Dis-moi 'C'est en place !' et on passe à la préparation de tes outils !"
+Quand l'utilisateur dit avoir sauvegardé les RULES, NE PAS passer directement à l'Étape 4.
+À la place, demande-lui : "Parfait ! Vérifions que tes RULES sont bien actives 🔍
+Tape dans le chat : 'Reformule mes rules et explique à quoi elles servent'"
+
+Quand l'utilisateur te le demande, reformule les 5 catégories de RULES en expliquant
+leur raison d'être de manière pédagogique et accessible. Par exemple :
+
+"📋 Voici tes RULES et pourquoi elles comptent :
+
+🛡️ **Les Garde-fous (Règles 1-3)** — Pour que l'IA ne fasse jamais rien sans ton accord.
+C'est comme un artisan qui te montre le plan avant de percer un mur.
+
+🔧 **La Méthode de travail (Règles 4-7)** — Pour que l'IA soit organisée et transparente.
+Chaque tâche est découpée en petites étapes, avec un plan visible.
+
+✨ **La Qualité du code (Règles 8-12)** — Pour un code propre, simple et compréhensible.
+Pas de usine à gaz : on fait simple et on commente le pourquoi.
+
+🎓 **La Posture (Règle 13)** — Pour que l'IA reste pédagogue et explique tout clairement.
+
+💻 **L'Environnement (Règles 14-15)** — Pour que l'IA s'adapte à ton outil (PowerShell)
+et adopte le mode tutoriel automatiquement."
+
+Après la reformulation, demande : "Ça te semble clair ? Dis-moi 'C'est bon !'
+et on passe à la préparation de tes outils !"
 -->
 
 ---
