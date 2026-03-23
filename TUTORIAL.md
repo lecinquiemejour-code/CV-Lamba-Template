@@ -381,21 +381,34 @@ d'assistant tutoriel interactif qui y est décrit. Guide l'utilisateur étape pa
 > [!TIP]
 > **Le saviez-vous ?** Ces règles sont ton "contrat de confiance" avec l'IA. Tu restes le seul maître à bord.
 
+> [!NOTE]
+> **Où sont stockées tes rules ?** Quand tu enregistres des rules **Global**, Antigravity crée un fichier sur ton PC :
+> `C:\Users\TON-NOM\.gemini\GEMINI.md`
+> C'est un simple fichier texte en markdown. Pas de magie : si tu ouvres ce fichier dans un éditeur, tu y retrouves exactement le texte que tu viens de coller. L'IA le relit à chaque nouvelle conversation.
+
 ### 3.3 — Vérifier que les RULES sont actives
 
-Comment savoir si l'IA a bien reçu tes instructions ? Simple : demande-lui !
+Comment savoir si l'IA a bien reçu tes instructions ? On va lui demander de **lire le fichier** et de te le reformuler !
 
 - **Action** : Dans le chat Antigravity, tape :
-  > *"Reformule mes rules et explique à quoi elles servent"*
-- **Résultat attendu** : L'IA te répond en reformulant chaque catégorie de règles avec une explication simple de leur raison d'être. Si elle ne les connaît pas, c'est que la sauvegarde n'a pas fonctionné — reviens à l'étape 3.2.
+  > *"Lis mon fichier de rules et reformule-les en m'expliquant à quoi elles servent"*
+- **Résultat attendu** : L'IA ouvre le fichier `GEMINI.md`, lit son contenu, puis te reformule chaque catégorie de règles avec une explication simple de leur raison d'être. Si le fichier est vide ou son contenu ne correspond pas, c'est que la sauvegarde n'a pas fonctionné — reviens à l'étape 3.2.
 
 <!-- [CHECKPOINT ÉTAPE 3]
 Quand l'utilisateur dit avoir sauvegardé les RULES, NE PAS passer directement à l'Étape 4.
 À la place, demande-lui : "Parfait ! Vérifions que tes RULES sont bien actives 🔍
-Tape dans le chat : 'Reformule mes rules et explique à quoi elles servent'"
+Tape dans le chat : 'Lis mon fichier de rules et reformule-les'"
 
-Quand l'utilisateur te le demande, reformule les 5 catégories de RULES en expliquant
-leur raison d'être de manière pédagogique et accessible. Par exemple :
+Quand l'utilisateur te le demande :
+1. **Lis le fichier** `~/.gemini/GEMINI.md` avec `view_file` (chemin complet :
+   `C:\Users\<NOM-UTILISATEUR>\.gemini\GEMINI.md` — remplace <NOM-UTILISATEUR>
+   par le nom réel trouvé dans le chemin du workspace).
+2. **Vérifie le contenu** : le fichier peut exister mais être vide ou contenir
+   un ancien contenu. Vérifie qu'il contient bien les 15 règles attendues
+   (Garde-fous, Méthode de travail, Qualité du code, Posture, Environnement).
+3. **Si le contenu est correct** : reformule les 5 catégories en expliquant
+   leur raison d'être de manière pédagogique, en te basant sur ce que tu viens
+   de lire (pas de mémoire). Par exemple :
 
 "📋 Voici tes RULES et pourquoi elles comptent :
 
@@ -412,6 +425,9 @@ Pas de usine à gaz : on fait simple et on commente le pourquoi.
 
 💻 **L'Environnement (Règles 14-15)** — Pour que l'IA s'adapte à ton outil (PowerShell)
 et adopte le mode tutoriel automatiquement."
+
+4. **Si le fichier est vide ou incorrect** : signale le problème et guide
+   l'utilisateur pour recommencer l'étape 3.2.
 
 Après la reformulation, demande : "Ça te semble clair ? Dis-moi 'C'est bon !'
 et on passe à la préparation de tes outils !"
