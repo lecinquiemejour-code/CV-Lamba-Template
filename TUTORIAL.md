@@ -38,24 +38,31 @@ L'installation se déroule en quatre étapes clés. Tu guides l'utilisateur pas 
 
 ### Étape 4 — Boîte à outils (l'assistant vérifie et guide l'installation)
 → Présente la stack du projet (HTML, CSS, React, Vite, Express, Gemini API, Netlify) avec l'analogie de la maison.
-→ Présente les 3 outils (Git, Node/npm, gh CLI) et leur rôle dans le tutoriel.
-→ Vérifie automatiquement si les outils sont installés (git --version, node --version, gh --version).
+→ Présente les 4 outils (Git, Node/npm, gh CLI, Poppler/pdftotext) et leur rôle dans le tutoriel.
+→ Vérifie automatiquement si les outils sont installés (git --version, node --version, gh --version, pdftotext -v).
 → Si un outil manque, tente d'abord l'installation automatique via `winget` (après le GO de l'utilisateur).
 → Si `winget` échoue ou n'est pas disponible, donne le lien de téléchargement manuel.
 → Rappelle de fermer et rouvrir Antigravity après chaque installation.
-→ Ne passe à l'Étape 5 qu'après que les 3 outils retournent un numéro de version.
+→ Ne passe à l'Étape 5 qu'après que les 4 outils retournent un numéro de version.
 
 ### Étape 5 — Clone (l'assistant exécute après explication et "GO")
 → Explique le concept de clone avec l'analogie du téléchargement intelligent.
 → Demande à l'utilisateur l'URL de SON repo (créé à l'étape 2).
 → Explique la commande que tu vas exécuter et POURQUOI.
 → Attends le "GO" de l'utilisateur.
-→ **IMPORTANT — Conflit TUTORIAL.md** : Le dossier CVIA/ contient déjà TUTORIAL.md
-  (l'utilisateur l'a placé là à l'étape 0). Avant le clone, renomme-le :
-  `Rename-Item TUTORIAL.md TUTORIAL.md.bak`
-  Après le clone réussi, supprime le backup : `Remove-Item TUTORIAL.md.bak`
-  Explique à l'utilisateur que c'est un renommage temporaire pour éviter un conflit.
-→ Exécute : `git clone <URL-DU-REPO> .` (ou la procédure `git init/pull` si dossier non vide).
+→ **IMPORTANT — Le dossier CVIA/ n'est PAS vide** : il contient déjà TUTORIAL.md
+  (placé à l'étape 0) et le dossier `_ressources-cv/` (avec le CV, la photo, etc.).
+  La commande `git clone <URL> .` refuse de fonctionner dans un dossier non vide.
+  **Utilise TOUJOURS la procédure `git init` + `git remote add` + `git pull`** :
+  ```
+  git init
+  git remote add origin <URL-DU-REPO>
+  git pull origin main
+  ```
+  Cette méthode est compatible avec les fichiers déjà présents (`TUTORIAL.md`, `_ressources-cv/`).
+  Si `git pull origin main` échoue, essaie `git pull origin master` (certains repos
+  créés depuis un template utilisent encore `master`).
+  Après le pull, vérifie la branche et renomme si nécessaire.
 → Après le clone, vérifie la branche avec `git branch`. Si elle s'appelle `master`, renomme-la en `main` avec `git branch -m master main` (GitHub attend `main`).
 → Une fois les fichiers apparus, félicite l'utilisateur.
 
@@ -78,7 +85,7 @@ L'installation se déroule en quatre étapes clés. Tu guides l'utilisateur pas 
 - Quand l'utilisateur fournit un CV PDF : copie-le dans `public/`, puis mets à jour `cv_pdf_name` dans `identity.json`.
 - Quand l'utilisateur fournit une image de projet pour le portfolio : rappelle-lui de la mettre dans `public/` et d'utiliser un chemin `/nom-du-fichier.ext` dans `portfolio.md`.
 - **Nettoyage des fichiers template** : après avoir copié les fichiers de l'utilisateur dans `public/`, supprime les fichiers template devenus orphelins (`photo.png`, `bot-avatar.jpg`, `cv-template.pdf`) pour éviter la confusion.
-- **Extraction PDF** : quand l'utilisateur demande d'extraire le contenu de son CV PDF, utilise `view_file` pour le lire directement. Ne crée PAS de script Node.js d'extraction (les bibliothèques comme pdf-parse changent d'API fréquemment). Si `view_file` ne peut pas lire le PDF, demande à l'utilisateur de copier-coller le texte dans le chat.
+- **Extraction PDF** : quand l'utilisateur demande d'extraire le contenu de son CV PDF, utilise la commande `pdftotext` (installée à l'Étape 4 via Poppler) pour extraire le texte. Commande : `pdftotext "chemin/vers/fichier.pdf" -` (le `-` affiche le résultat dans le terminal). Ne crée PAS de script Node.js d'extraction. Si `pdftotext` n'est pas installé, guide l'utilisateur pour l'installer (`winget install oschwartz10612.Poppler`). En dernier recours, demande à l'utilisateur de copier-coller le texte dans le chat.
 - **Validation Séquentielle (Fin Étape 6)** : Avant de passer à l'étape 7, tu DOIS montrer le contenu de chaque fichier clé dans le chat pour validation. Procède un par un, dans cet ordre : `identity.json`, puis `experiences.md`, puis `portfolio.md`, puis `greeting.md`. Pour chaque fichier : (1) lis-le avec `view_file`, (2) affiche son contenu INTÉGRALEMENT dans le chat en **rendu markdown** (pas en bloc de code brut — l'utilisateur doit voir le résultat formaté directement), (3) explique brièvement ce que contient chaque section, (4) demande "Est-ce que ce contenu te convient ? Tu veux modifier quelque chose ?". Ne passe au fichier suivant qu'après le "OK" explicite de l'utilisateur.
 
 ## PROTOCOLE DE DÉMARRAGE
@@ -309,7 +316,7 @@ Les RULES permettent de dire à l'IA : *"Je suis débutant, explique tout simple
 ### 3.2 — Comment les configurer
 - **Action** : Dans Antigravity, clique sur les **trois petits points `...`** en haut à droite.
 - **Action** : Clique sur **Customizations**, puis sur l'onglet **Rules**.
-- **Action** : Clique sur **+ Workspace**.
+- **Action** : Clique sur **+ Global**.
 - **Action** : Copie-colle le texte suivant :
 
 ```markdown
@@ -452,6 +459,9 @@ Node.js fait tourner JavaScript en dehors du navigateur (c'est-à-dire sur ton o
 📞 **GitHub CLI (gh)** — *Le téléphone direct vers GitHub*
 C'est un petit programme qui connecte ton ordinateur à ton compte GitHub. Sans lui, tu ne pourrais pas envoyer tes fichiers vers le cloud. Il simplifie la connexion : au lieu de taper un mot de passe, il ouvre ton navigateur pour te connecter en un clic.
 
+📄 **Poppler (pdftotext)** — *Le traducteur de PDF*
+Poppler est un outil qui sait « lire » les fichiers PDF et en extraire le texte brut. C'est grâce à lui que l'IA pourra lire ton CV en PDF et en extraire automatiquement tes informations — sans que tu aies besoin de tout recopier à la main.
+
 ### 4.3 — Installer et vérifier les outils
 
 On va vérifier si ces outils sont déjà installés sur ton ordinateur. Si ce n'est pas le cas, je peux les installer pour toi !
@@ -470,6 +480,7 @@ Si un outil manque, je vais essayer de l'installer automatiquement grâce à `wi
 | **Git** | [git-scm.com/downloads](https://git-scm.com/downloads) | Clique sur "Windows", puis lance l'installateur. Garde toutes les options par défaut. |
 | **Node.js** (inclut npm) | [nodejs.org](https://nodejs.org/) | Prends le bouton **LTS** (à gauche), c'est la version stable. Lance l'installateur. |
 | **GitHub CLI** | [cli.github.com](https://cli.github.com/) | Clique sur "Download for Windows", puis installe. |
+| **Poppler** (pdftotext) | [oschwartz10612/poppler-windows](https://github.com/oschwartz10612/poppler-windows/releases) | Télécharge le `.zip`, décompresse-le, et ajoute le dossier `Library\bin\` au PATH. |
 
 > [!IMPORTANT]
 > **Après chaque installation** (automatique ou manuelle), il faut **fermer et rouvrir Antigravity** pour que l'outil soit reconnu. C'est comme redémarrer une machine après avoir branché un nouvel appareil.
@@ -480,6 +491,7 @@ Si un outil manque, je vais essayer de l'installer automatiquement grâce à `wi
 > brew install git
 > brew install node
 > brew install gh
+> brew install poppler
 > ```
 > Git est souvent déjà installé sur Mac. Vérifie avec `git --version` dans le terminal.
 
@@ -501,8 +513,8 @@ Si après 15 minutes l'installation est toujours bloquée, rassure l'utilisateur
 -->
 
 <!-- [CHECKPOINT ÉTAPE 4]
-Vérifier que les 3 outils retournent un numéro de version.
-"Les 3 outils sont validés ✅ ?
+Vérifier que les 4 outils retournent un numéro de version.
+"Les 4 outils sont validés ✅ ?
 Dis-moi 'Tout est vert !' et on passe au téléchargement du projet ! 🚀"
 -->
 
@@ -535,14 +547,18 @@ Ton projet existe maintenant sur GitHub ("dans le cloud" ☁️), mais les fichi
 
 ### Ce que je vais faire pour toi
 
-Je vais exécuter une commande qui :
-- **Télécharge** tous les fichiers de ton repo dans ce dossier `CVIA/`
-- **Garde le lien** avec ton compte GitHub pour les futures mises à jour
+Je vais exécuter une série de commandes qui :
+- **Initialisent** Git dans ton dossier `CVIA/`
+- **Téléchargent** tous les fichiers de ton repo depuis GitHub
+- **Gardent le lien** avec ton compte GitHub pour les futures mises à jour
+
+> [!NOTE]
+> **Ton dossier n'est pas vide, et c'est normal !** Tu y as déjà placé `TUTORIAL.md` et le dossier `_ressources-cv/` avec tes fichiers. Pas d'inquiétude : la méthode utilisée est compatible avec les fichiers existants — rien ne sera écrasé ni perdu.
 
 > [!NOTE]
 > **Première connexion à GitHub depuis Antigravity ?** Si une fenêtre de navigateur s'ouvre pour te connecter à GitHub, c'est normal ! C'est une étape unique.
 
-Je te montrerai la commande exacte avant de l'exécuter, et j'attendrai ton **"GO"** 😉
+Je te montrerai les commandes exactes avant de les exécuter, et j'attendrai ton **"GO"** 😉
 
 <!-- [CHECKPOINT ÉTAPE 5]
 Une fois le clone terminé, poser cette question :
@@ -605,7 +621,7 @@ La clé API est un code secret qui permet à ton site de communiquer avec l'inte
 Si tu as un ancien CV en PDF, commence par ça !
 - **Action** : Ton CV est normalement dans le dossier `_ressources-cv/` (tu l'y as mis à l'Étape 1). Dis-moi simplement :
   > *"Mon CV est dans _ressources-cv/mon-cv.pdf, peux-tu le lire et extraire mes informations ?"*
-- **Résultat** : Je lis ton document directement, j'extrais tes expériences, tes diplômes et tes compétences, et je pré-remplis tout à ta place.
+- **Résultat** : J'utilise l'outil `pdftotext` (installé à l'Étape 4) pour extraire le texte de ton PDF, puis j'analyse tes expériences, tes diplômes et tes compétences pour pré-remplir les fichiers à ta place.
 
 ### 6.2 — Tes informations de base (`identity.json`)
 Nom, prénom, titre professionnel, liens réseaux sociaux.
