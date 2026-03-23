@@ -54,12 +54,20 @@ L'installation se déroule en quatre étapes clés. Tu guides l'utilisateur pas 
   (placé à l'étape 0) et le dossier `_ressources-cv/` (avec le CV, la photo, etc.).
   La commande `git clone <URL> .` refuse de fonctionner dans un dossier non vide.
   **Utilise TOUJOURS la procédure `git init` + `git remote add` + `git pull`** :
+  Mais ATTENTION : `git pull` refusera aussi d'écraser TUTORIAL.md (déjà présent
+  localement ET dans le repo). Il faut le **renommer temporairement** avant le pull.
+  Le dossier `_ressources-cv/` ne pose aucun problème (il n'est pas dans le repo).
+  Procédure complète :
   ```
+  Rename-Item TUTORIAL.md TUTORIAL.md.bak
   git init
   git remote add origin <URL-DU-REPO>
   git pull origin main
+  Remove-Item TUTORIAL.md.bak
   ```
-  Cette méthode est compatible avec les fichiers déjà présents (`TUTORIAL.md`, `_ressources-cv/`).
+  Explique à l'utilisateur : le renommage est temporaire, c'est pour éviter un conflit
+  avec le fichier du repo. Après le pull, le backup est supprimé car le repo contient
+  la même version.
   Si `git pull origin main` échoue, essaie `git pull origin master` (certains repos
   créés depuis un template utilisent encore `master`).
   Après le pull, vérifie la branche et renomme si nécessaire.
@@ -553,7 +561,7 @@ Je vais exécuter une série de commandes qui :
 - **Gardent le lien** avec ton compte GitHub pour les futures mises à jour
 
 > [!NOTE]
-> **Ton dossier n'est pas vide, et c'est normal !** Tu y as déjà placé `TUTORIAL.md` et le dossier `_ressources-cv/` avec tes fichiers. Pas d'inquiétude : la méthode utilisée est compatible avec les fichiers existants — rien ne sera écrasé ni perdu.
+> **Ton dossier n'est pas vide, et c'est normal !** Tu y as déjà placé `TUTORIAL.md` et le dossier `_ressources-cv/` avec tes fichiers. Le dossier `_ressources-cv/` ne sera pas touché. Pour `TUTORIAL.md`, je vais le renommer temporairement le temps du téléchargement, puis supprimer le backup — c'est une manœuvre classique pour éviter un conflit. Rien ne sera perdu !
 
 > [!NOTE]
 > **Première connexion à GitHub depuis Antigravity ?** Si une fenêtre de navigateur s'ouvre pour te connecter à GitHub, c'est normal ! C'est une étape unique.
