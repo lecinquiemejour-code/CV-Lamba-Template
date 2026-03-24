@@ -8,6 +8,10 @@ import ReactMarkdown from 'react-markdown';
 import { Send, User, Bot, Loader2, Sparkles, ExternalLink, X, Mail, Linkedin, Printer, Download } from 'lucide-react';
 import { sendMessageToAI } from './services/ai';
 import identity from './content/identity.json';
+import greetingRaw from './content/greeting.md?raw';
+
+// Remplace le placeholder {{USER_FULL_NAME}} par le vrai nom du JSON
+const greetingText = greetingRaw.replace(/\{\{USER_FULL_NAME\}\}/g, identity.basics.name);
 
 // Photos et PDF servis depuis public/, noms configurés dans identity.json
 const profilePhoto = `/${identity.basics.photo}`;
@@ -41,7 +45,7 @@ export default function App() {
     {
       id: 'welcome',
       role: 'ai',
-      content: identity.ai_persona.greeting
+      content: greetingText
     }
   ]);
   const [input, setInput] = useState('');

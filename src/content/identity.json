@@ -11,7 +11,6 @@
   },
   "ai_persona": {
     "bot_name": "Mon Assistant CV",
-    "greeting": "Bonjour ! Je suis l'assistant IA pour ce CV. Comment puis-je vous aider ?",
     "fun_fact_trigger": "anecdote",
     "fun_fact_content": "Personnalisez cette anecdote dans identity.json !"
   }

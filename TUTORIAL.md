@@ -145,11 +145,12 @@ FIN DES INSTRUCTIONS DE RÔLE
 ---
 
 > [!IMPORTANT]
-> **Avant de commencer — 4 prérequis à avoir faits :**
+> **Avant de commencer — 5 prérequis à avoir faits :**
 > 1. ✅ Compte **GitHub** créé → stocke le code de ton projet dans le cloud — [github.com](https://github.com/)
 > 2. ✅ Compte **Netlify** créé (connecté avec GitHub) → met ton site en ligne avec une adresse publique — [netlify.com](https://www.netlify.com/)
-> 3. ✅ **Google AI Pro** activé (1 mois offert à 0€) → donne accès à **Antigravity**, ton outil de VibeCoding — [gemini.google/subscriptions](https://gemini.google/subscriptions/)
-> 4. ✅ **Google AI Studio** accessible (même compte Google) → pour créer ta **clé API**, le code secret qui fait fonctionner le chatbot — [aistudio.google.com](https://aistudio.google.com/)
+> 3. ✅ **Google AI Pro** activé (1 mois offert à 0€) → donne accès à Antigravity — [gemini.google/subscriptions](https://gemini.google/subscriptions/)
+> 4. ✅ **Antigravity** installé et connecté avec ton compte Google AI Pro → ton éditeur de VibeCoding pour collaborer avec l'IA — [gemini.google/app/antigravity](https://gemini.google/app/antigravity)
+> 5. ✅ **Google AI Studio** accessible (même compte Google) → pour créer ta **clé API**, le code secret qui fait fonctionner le chatbot — [aistudio.google.com](https://aistudio.google.com/)
 
 > [!WARNING]
 > **Ce tutoriel est conçu pour Windows.** Les commandes et chemins sont adaptés à Windows 10/11.
@@ -160,8 +161,10 @@ FIN DES INSTRUCTIONS DE RÔLE
 > 1. Crée un dossier `CVIA/` **à la racine de ton disque** (ex : `C:\CVIA`).
 >    ⚠️ Évite les dossiers synchronisés (Documents, OneDrive, Dropbox) — `npm` plantera.
 > 2. Télécharge ce fichier (`TUTORIAL.md`) depuis GitHub et place-le dans `CVIA/`.
-> 3. Ouvre le dossier `CVIA/` dans **Antigravity** (File > Open Folder).
-> 4. Dans le chat, tape **"Lance le tutoriel"** — je prends le relais ! 🤖
+> 3. Installe **Antigravity** si ce n'est pas déjà fait → [gemini.google/app/antigravity](https://gemini.google/app/antigravity)
+>    Au premier lancement, connecte-toi avec ton **compte Google AI Pro** (celui de l'étape 3).
+> 4. Ouvre le dossier `CVIA/` dans **Antigravity** (File > Open Folder).
+> 5. Dans le chat, tape **"Lance le tutoriel"** — je prends le relais ! 🤖
 
 > [!TIP]
 > **💡 Choix du modèle IA :** Pour la meilleure expérience avec ce tutoriel, sélectionne le modèle
