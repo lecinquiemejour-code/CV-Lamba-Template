@@ -509,23 +509,43 @@ On va vérifier si ces outils sont déjà installés sur ton ordinateur. Si ce n
 Si un outil manque, je vais essayer de l'installer automatiquement grâce à `winget` (le gestionnaire de paquets de Windows). C'est comme un app store en ligne de commande — rapide et propre.
 
 > [!NOTE]
-> **Comment ça marche ?** Je te montre la commande, tu me dis **« GO »**, et j'installe. Si `winget` n'est pas disponible sur ta machine, pas de panique — je te donne le lien pour télécharger à la main.
+> **Comment ça marche ?** Je te montre la commande, tu me dis **« GO »**, et j'installe. Si `winget` n'est pas disponible sur ta machine, pas de panique — on a deux roues de secours !
 
-**Si l'installation automatique ne fonctionne pas**, voici les liens manuels :
+**Si l'installation automatique `winget` ne fonctionne pas (ou est bloquée), demande à l'IA d'utiliser l'une de ces 2 roues de secours :**
+
+#### 🛞 Roue de secours N°1 : Le script direct (Recommandé)
+Au lieu de passer par winget, dis à l'IA : *"Exécute la Roue de secours N°1 pour installer mes outils"*. L'IA exécutera alors ce bloc de code qui téléchargera directement les logiciels et affichera les barres d'installation à l'écran automatiquement :
+
+```powershell
+Write-Host "🚀 DÉMARRAGE DE L'INSTALLATION DIRECTE (SANS WINGET)" -ForegroundColor Cyan
+Write-Host "📦 1/4 - Node.js..."
+Invoke-WebRequest "https://nodejs.org/dist/v20.15.1/node-v20.15.1-x64.msi" -OutFile "$env:TEMP\node.msi"
+Start-Process msiexec.exe -ArgumentList "/i $env:TEMP\node.msi /passive /norestart" -Wait
+Write-Host "📦 2/4 - Git..."
+Invoke-WebRequest "https://github.com/git-for-windows/git/releases/download/v2.45.2.windows.1/Git-2.45.2-64-bit.exe" -OutFile "$env:TEMP\git.exe"
+Start-Process "$env:TEMP\git.exe" -ArgumentList "/SILENT /NORESTART" -Wait
+Write-Host "📦 3/4 - GitHub CLI..."
+Invoke-WebRequest "https://github.com/cli/cli/releases/download/v2.53.0/gh_2.53.0_windows_amd64.msi" -OutFile "$env:TEMP\gh.msi"
+Start-Process msiexec.exe -ArgumentList "/i $env:TEMP\gh.msi /passive /norestart" -Wait
+Write-Host "📦 4/4 - Poppler (Extraction PDF)..."
+Invoke-WebRequest "https://github.com/oschwartz10612/poppler-windows/releases/download/v24.02.0-0/Release-24.02.0-0.zip" -OutFile "$env:TEMP\poppler.zip"
+Write-Host "Décompression des fichiers Poppler en cours..."
+Expand-Archive -Path "$env:TEMP\poppler.zip" -DestinationPath "$env:USERPROFILE\Poppler" -Force
+$popplerBin = "$env:USERPROFILE\Poppler\poppler-24.02.0\Library\bin"
+$path = [Environment]::GetEnvironmentVariable("Path", "User")
+if ($path -notlike "*$popplerBin*") { [Environment]::SetEnvironmentVariable("Path", "$path;$popplerBin", "User") }
+Write-Host "✅ TOUT EST TERMINE ! Il faut ABSOLUMENT fermer cette fenetre et rouvrir le programme." -ForegroundColor Green
+```
+
+#### 🛞 Roue de secours N°2 : L'installation 100% manuelle
+Si ton entreprise bloque toute exécution de script, il ne te reste plus qu'à cliquer :
 
 | Outil | Lien | Quoi faire |
 |-------|------|------------|
-| **Git** | [git-scm.com/downloads](https://git-scm.com/downloads) | Clique sur "Windows", puis lance l'installateur. Garde toutes les options par défaut. |
-| **Node.js** (inclut npm) | [nodejs.org](https://nodejs.org/) | Prends le bouton **LTS** (à gauche), c'est la version stable. Lance l'installateur. |
+| **Git** | [git-scm.com/downloads](https://git-scm.com/downloads) | Clique sur "Windows", lance l'installateur, et fais Suivant jusqu'au bout. |
+| **Node.js** | [nodejs.org](https://nodejs.org/) | Prends le bouton **LTS** (version stable). Lance l'installeur. |
 | **GitHub CLI** | [cli.github.com](https://cli.github.com/) | Clique sur "Download for Windows", puis installe. |
-| **Poppler** (pdftotext) | [oschwartz10612/poppler-windows](https://github.com/oschwartz10612/poppler-windows/releases) | Télécharge le `.zip`, décompresse-le, et ajoute le dossier `Library\bin\` au PATH. |
-
-> [!TIP]
-> **💡 winget ne fonctionne pas dans Antigravity ?** Pas de panique ! Un script d'installation est inclus dans le projet :
-> 1. Ouvre l'**Explorateur de fichiers** Windows et va dans ton dossier `CVIA/`.
-> 2. Fais **clic droit** sur le fichier `install-outils.ps1` → **Exécuter avec PowerShell**.
-> 3. Le script installe automatiquement les 4 outils manquants.
-> 4. Une fois terminé, **ferme et rouvre Antigravity**.
+| **Poppler** | [Télécharger ZIP](https://github.com/oschwartz10612/poppler-windows/releases) | Extrais le `.zip` et demande à l'IA : *"Aide-moi à ajouter Poppler aux variables d'environnement".* |
 
 > [!IMPORTANT]
 > **Après chaque installation** (automatique ou manuelle), il faut **fermer et rouvrir Antigravity** pour que l'outil soit reconnu. C'est comme redémarrer une machine après avoir branché un nouvel appareil.
@@ -547,8 +567,7 @@ Si l'utilisateur est bloqué sur l'installation, diagnostique avec ce tableau :
 
 | Symptôme | Cause probable | Solution |
 |---|---|---|
-| `winget` non reconnu | Windows trop ancien ou Microsoft Store absent | Proposer le script `install-outils.ps1` (clic droit → Exécuter avec PowerShell depuis l'Explorateur). Si ça ne marche pas non plus, donner les liens manuels. |
-| `winget` échoue dans Antigravity | Le terminal intégré n'a pas les mêmes droits | Proposer le script `install-outils.ps1` depuis un PowerShell externe |
+| `winget` non reconnu ou échoue | Windows trop ancien ou restrictions réseaux | Proposer la **Roue de secours N°1** (exécuter le bloc PowerShell). Si ça bloque aussi, proposer la Roue N°2 (manuel). |
 | `git --version` ne marche pas après install | PATH non mis à jour | Fermer et rouvrir Antigravity (rappeler que c'est obligatoire) |
 | Version trop ancienne (Node < 18) | Installation précédente obsolète | Désinstaller l'ancienne version, réinstaller via les liens manuels |
 | Erreur de proxy ou timeout | Réseau d'entreprise avec proxy | Demander à l'utilisateur s'il est sur un réseau d'entreprise, suggérer un réseau personnel |
