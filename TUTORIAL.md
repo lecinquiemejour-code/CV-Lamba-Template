@@ -42,7 +42,7 @@ L'installation se déroule en quatre étapes clés. Tu guides l'utilisateur pas 
 → Vérifie automatiquement si les outils sont installés (git --version, node --version, gh --version, pdftotext -v).
 → Si un outil manque, tente d'abord l'installation automatique via `winget` (après le GO de l'utilisateur).
 → Si `winget` échoue ou n'est pas disponible, donne le lien de téléchargement manuel.
-→ Rappelle de fermer et rouvrir Antigravity après chaque installation.
+→ Après chaque installation, rappelle de fermer et rouvrir Antigravity, puis explique comment reprendre la conversation : icône d'historique (en haut à gauche) → ouvrir la conversation précédente → dire « C'est installé ! ».
 → Ne passe à l'Étape 5 qu'après que les 4 outils retournent un numéro de version.
 
 ### Étape 5 — Clone (l'assistant exécute après explication et "GO")
@@ -94,6 +94,11 @@ L'installation se déroule en quatre étapes clés. Tu guides l'utilisateur pas 
 - Quand l'utilisateur fournit une image de projet pour le portfolio : rappelle-lui de la mettre dans `public/` et d'utiliser un chemin `/nom-du-fichier.ext` dans `portfolio.md`.
 - **Nettoyage des fichiers template** : après avoir copié les fichiers de l'utilisateur dans `public/`, supprime les fichiers template devenus orphelins (`photo.png`, `bot-avatar.jpg`, `cv-template.pdf`) pour éviter la confusion.
 - **Extraction PDF** : quand l'utilisateur demande d'extraire le contenu de son CV PDF, utilise la commande `pdftotext` (installée à l'Étape 4 via Poppler) pour extraire le texte. Commande : `pdftotext "chemin/vers/fichier.pdf" -` (le `-` affiche le résultat dans le terminal). Ne crée PAS de script Node.js d'extraction. Si `pdftotext` n'est pas installé, guide l'utilisateur pour l'installer (`winget install oschwartz10612.Poppler`). En dernier recours, demande à l'utilisateur de copier-coller le texte dans le chat.
+- **INTERDIT — Ne modifie JAMAIS ces éléments sans le GO explicite de l'utilisateur :**
+  - La librairie AI utilisée (`@google/generative-ai` dans `chat.ts`, `@google/genai` dans `server.ts`)
+  - Le modèle AI (`gemini-3.1-flash-lite-preview` défini dans `ai-config.json`)
+  - Les dépendances dans `package.json`
+  Si tu penses qu'un changement est nécessaire, explique POURQUOI et attends la validation.
 - **Validation Séquentielle (Fin Étape 6)** : Avant de passer à l'étape 7, tu DOIS montrer le contenu de chaque fichier clé dans le chat pour validation. Procède un par un, dans cet ordre : `identity.json`, puis `experiences.md`, puis `portfolio.md`, puis `greeting.md`. Pour chaque fichier : (1) lis-le avec `view_file`, (2) affiche son contenu INTÉGRALEMENT dans le chat en **rendu markdown** (pas en bloc de code brut — l'utilisateur doit voir le résultat formaté directement), (3) explique brièvement ce que contient chaque section, (4) demande "Est-ce que ce contenu te convient ? Tu veux modifier quelque chose ?". Ne passe au fichier suivant qu'après le "OK" explicite de l'utilisateur.
 
 ## PROTOCOLE DE DÉMARRAGE
@@ -342,6 +347,8 @@ Ces règles encadrent ton comportement dans ce projet. Elles sont non négociabl
 Ne jamais écrire ou modifier du code sans approbation explicite ("GO").
 ### Règle 2 — Périmètre strict
 Ne modifie que ce qui est explicitement demandé.
+### Règle 2b — Librairies et modèle AI intouchables
+Ne change JAMAIS la librairie AI (`@google/generative-ai` dans `chat.ts`, `@google/genai` dans `server.ts`), le modèle AI (`ai-config.json`), ni les dépendances `package.json` sans le GO explicite de l'utilisateur.
 ### Règle 3 — Réflexion avant action
 Avant de demander le "GO", explique ton raisonnement de manière pédagogique.
 Avant ET pendant chaque action (commande, édition), explique en termes simples
@@ -549,18 +556,18 @@ Si ton entreprise bloque toute exécution de script, il ne te reste plus qu'à c
 
 > [!IMPORTANT]
 > **Après chaque installation** (automatique ou manuelle), il faut **fermer et rouvrir Antigravity** pour que l'outil soit reconnu. C'est comme redémarrer une machine après avoir branché un nouvel appareil.
+>
+> **⚠️ Pour reprendre le tutoriel là où tu en étais :**
+> 1. Rouvre Antigravity
+> 2. Clique sur l'icône d'historique (en haut à gauche)
+> 3. Retrouve et ouvre ta conversation précédente
+> 4. Dis simplement **« C'est installé ! »** — l'IA revérifiera tes outils et reprendra le tutoriel
 
 > [!NOTE]
 > 🍎 **Sur Mac ?** Installe d'abord [Homebrew](https://brew.sh) (le `winget` du Mac), puis :
 > ```
-> brew install git
-> brew install node
-> brew install gh
-> brew install poppler
+> brew install git && brew install node && brew install gh && brew install poppler
 > ```
-> Git est souvent déjà installé sur Mac. Vérifie avec `git --version` dans le terminal.
-
-- **Action** : Une fois installé, reviens me dire **« C'est installé ! »** et je revérifie.
 
 <!-- [DIAGNOSTIC ÉTAPE 4 — GUIDE POUR L'IA]
 Si l'utilisateur est bloqué sur l'installation, diagnostique avec ce tableau :
