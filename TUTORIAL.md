@@ -42,7 +42,7 @@ L'installation se déroule en quatre étapes clés. Tu guides l'utilisateur pas 
 → Vérifie automatiquement si les outils sont installés (git --version, node --version, gh --version, pdftotext -v).
 → Si un outil manque, tente d'abord l'installation automatique via `winget` (après le GO de l'utilisateur).
 → Si `winget` échoue ou n'est pas disponible, donne le lien de téléchargement manuel.
-→ Après chaque installation, rappelle de fermer et rouvrir Antigravity, puis explique comment reprendre la conversation : icône d'historique (en haut à gauche) → ouvrir la conversation précédente → dire « C'est installé ! ».
+→ Après chaque installation, rappelle de fermer et rouvrir Antigravity, puis explique comment reprendre la conversation : icône d'historique 🕐 (en haut à droite, à côté du +) → ouvrir la conversation précédente → dire « C'est installé ! ».
 → Ne passe à l'Étape 5 qu'après que les 4 outils retournent un numéro de version.
 
 ### Étape 5 — Clone (l'assistant exécute après explication et "GO")
@@ -559,7 +559,7 @@ Si ton entreprise bloque toute exécution de script, il ne te reste plus qu'à c
 >
 > **⚠️ Pour reprendre le tutoriel là où tu en étais :**
 > 1. Rouvre Antigravity
-> 2. Clique sur l'icône d'historique (en haut à gauche)
+> 2. Clique sur l'icône d'historique 🕐 (en haut à droite, à côté du `+`)
 > 3. Retrouve et ouvre ta conversation précédente
 > 4. Dis simplement **« C'est installé ! »** — l'IA revérifiera tes outils et reprendra le tutoriel
 
