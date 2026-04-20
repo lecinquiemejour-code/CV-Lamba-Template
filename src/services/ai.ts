@@ -29,14 +29,27 @@ export async function sendMessageToAI(
     });
 
     if (!response.ok) {
+      let backendError = "";
+      try {
+        const errorData = await response.json();
+        if (errorData && errorData.error) {
+          backendError = errorData.error;
+        }
+      } catch (e) {
+        // Ignorer silencieusement si ce n'est pas un JSON valide
+      }
+
       // Mapping des codes HTTP vers des messages utilisateur explicites
       const errorMessages: Record<number, string> = {
         429: "Le service est temporairement surchargé. Veuillez réessayer dans quelques secondes.",
         503: "Le service IA est momentanément indisponible. Veuillez réessayer dans quelques instants.",
       };
-      const userMessage = errorMessages[response.status] || "Une erreur technique est survenue. Veuillez réessayer.";
-      console.error(`[AI] Erreur HTTP ${response.status} reçue du serveur.`);
-      throw new Error(userMessage);
+      
+      const baseMessage = backendError || errorMessages[response.status] || "Une erreur technique est survenue.";
+      const finalMessage = `${baseMessage} (Code HTTP: ${response.status})`;
+
+      console.error(`[AI] Erreur HTTP ${response.status} reçue du serveur. Détail: ${backendError}`);
+      throw new Error(finalMessage);
     }
 
     const reader = response.body?.getReader();
@@ -56,6 +69,9 @@ export async function sendMessageToAI(
     }
   } catch (error) {
     console.error("[UI] Erreur lors de la communication avec le serveur :", error);
-    throw new Error("Une erreur est survenue lors de la communication avec l'assistant. Veuillez réessayer.");
+    if (error instanceof Error && error.message && error.message !== "Failed to fetch") {
+      throw error;
+    }
+    throw new Error("Une erreur inattendue est survenue lors de la communication avec l'assistant. Veuillez vérifier votre connexion.");
   }
 }

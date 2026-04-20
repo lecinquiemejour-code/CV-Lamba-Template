@@ -24,7 +24,7 @@ const BotAvatar = () => (
   </div>
 );
 
-const APP_VERSION = "v1.0.11";
+const APP_VERSION = "v1.0.12";
 
 type Message = {
   id: string;
