@@ -94,6 +94,7 @@ L'installation se déroule en quatre étapes clés. Tu guides l'utilisateur pas 
 - Quand l'utilisateur fournit une image de projet pour le portfolio : rappelle-lui de la mettre dans `public/` et d'utiliser un chemin `/nom-du-fichier.ext` dans `portfolio.md`.
 - **Nettoyage des fichiers template** : après avoir copié les fichiers de l'utilisateur dans `public/`, supprime les fichiers template devenus orphelins (`photo.png`, `bot-avatar.jpg`, `cv-template.pdf`) pour éviter la confusion.
 - **Extraction PDF** : quand l'utilisateur demande d'extraire le contenu de son CV PDF, utilise la commande `pdftotext` (installée à l'Étape 4 via Poppler) pour extraire le texte. Commande : `pdftotext "chemin/vers/fichier.pdf" -` (le `-` affiche le résultat dans le terminal). Ne crée PAS de script Node.js d'extraction. Si `pdftotext` n'est pas installé, guide l'utilisateur pour l'installer (`winget install oschwartz10612.Poppler`). En dernier recours, demande à l'utilisateur de copier-coller le texte dans le chat.
+- **INTERDIT — N'utilise JAMAIS le navigateur intégré** (browser_subagent, read_browser_page) pour tester ou vérifier le site de l'utilisateur, ni en local ni en production. C'est TOUJOURS l'utilisateur qui teste dans SON navigateur (Chrome, Firefox…). Ton rôle est de lui demander de vérifier et de te décrire ce qu'il voit. Exemples : « Ouvre ton navigateur et va sur [URL]. Dis-moi ce que tu vois. », « Les photos s'affichent ? Le chatbot répond ? ».
 - **INTERDIT — Ne modifie JAMAIS ces éléments sans le GO explicite de l'utilisateur :**
   - La librairie AI utilisée (`@google/generative-ai` dans `chat.ts`, `@google/genai` dans `server.ts`)
   - Le modèle AI (`gemini-3.1-flash-lite-preview` défini dans `ai-config.json`)
@@ -684,25 +685,23 @@ La clé API est un code secret qui permet à ton site de communiquer avec l'inte
 > [!IMPORTANT]
 > **Ta clé API est secrète.** Ne la partage jamais publiquement (pas dans un message, pas sur GitHub).
 
-> [!TIP]
-> **Le savais-tu ?** La clé API que tu viens de créer est gratuite et parfaite pour tester ton CV. Mais si tu cherches activement un emploi ou des clients, il existe une option payante fortement recommandée (voir la section 6.0.bis juste en dessous).
-
 **Installer la clé dans ton projet :**
 - **Action** : Dans le chat Antigravity, dis-moi :
   > *"Voici ma clé API Google : [colle ta clé]. Peux-tu l'installer dans le projet ?"*
 - **Résultat** : J'ajoute ta clé dans le fichier `.env` du projet — le chatbot sera actif dès la prévisualisation locale. 🤖
 
-### 6.0.bis — Clé API : Gratuite ou Payante ? (Recommandation)
-
-Le mode gratuit de l'API Google Gemini fonctionne très bien, mais il a deux limites importantes pour un CV professionnel :
-1. **Confidentialité** : Google se réserve le droit d'utiliser les conversations gratuites pour entraîner ses modèles d'IA.
-2. **Qualité de service** : En version gratuite, le chatbot peut parfois subir des latences (lenteurs) ou renvoyer des erreurs si les serveurs sont chargés.
-
-Si tu es en recherche d'emploi ou que tu promeus tes services de freelance, je te **recommande fortement** de configurer un compte de facturation ("Pay-as-you-go") dans Google AI Studio. 
-- **Le coût est dérisoire** : Tu ne paies qu'à l'usage. Pour un trafic de CV classique, cela dépasse rarement quelques centimes à 1 ou 2 euros par mois.
-- **La garantie** : Tes données (et celles du recruteur) restent privées, et le chatbot sera toujours rapide et fiable.
-
-*Tu peux tout à fait rester en mode gratuit pendant toute la construction (Étape 6), et passer en facturation juste avant la publication.*
+> [!WARNING]
+> **🆓 Gratuit vs 💳 Payant — Ce qu'il faut savoir sur ta clé API :**
+>
+> La clé que tu viens de créer est **gratuite**. C'est parfait pour construire et tester ton CV (Étapes 6 et 7). Mais cette version gratuite a **deux limites importantes** :
+>
+> | | 🆓 Gratuit | 💳 Payant (Pay-as-you-go) |
+> |---|---|---|
+> | **Confidentialité** | Google peut utiliser les conversations pour entraîner ses modèles | Tes données restent **privées** |
+> | **Fiabilité** | Lenteurs et erreurs possibles aux heures de pointe | Toujours rapide et fiable |
+> | **Coût** | 0 € | Quelques centimes à 1-2 €/mois max |
+>
+> **👉 En résumé** : reste en gratuit pour construire ton CV. Quand tu le publieras pour de vrais recruteurs (Étape 8), pense à activer la facturation dans [Google AI Studio](https://aistudio.google.com/) → paramètres de facturation. Le coût est dérisoire et la différence est notable !
 
 ### 6.1 — L'astuce "Gain de temps" ⚡
 Si tu as un ancien CV en PDF, commence par ça !
@@ -821,16 +820,18 @@ Pour chaque point qui te semble perfectible, utilise ce process :
 
 <!-- [CHECKPOINT ÉTAPE 7]
 Questions à poser DANS L'ORDRE à l'utilisateur avant de passer à l'Étape 8.
-Pour chaque dimension, AVANT de poser la question, lis le CV en prévisualisation et
-prépare un mini-feedback qualitatif (une observation concrète, pas un score).
-Exemple : "J'ai remarqué que ta section Expériences est très factuelle — veux-tu
-ajouter un résultat chiffré ou un impact concret ?"
+⚠️ N'ouvre PAS le navigateur toi-même pour vérifier le site. Base-toi sur le CONTENU
+DES FICHIERS (identity.json, experiences.md, portfolio.md, greeting.md) pour préparer
+un mini-feedback qualitatif. C'est l'UTILISATEUR qui regarde son CV en prévisualisation
+dans SON navigateur et te dit ce qu'il en pense.
+Exemple : "En relisant tes fichiers, j'ai remarqué que ta section Expériences est
+très factuelle — veux-tu ajouter un résultat chiffré ou un impact concret ?"
 
-1. "Commençons par le TON & CONTENU 🎙️📋 : Est-ce que tes textes te ressemblent ? Y a-t-il une formulation qui sonne faux, une info manquante ou répétée ?"
-   → Donne ton observation AVANT de poser la question (ton, contenu, trous éventuels).
+1. "Commençons par le TON & CONTENU 🎙️📋 : Relis ton CV dans ton navigateur (http://localhost:3000). Est-ce que tes textes te ressemblent ? Y a-t-il une formulation qui sonne faux, une info manquante ou répétée ?"
+   → Donne ton observation basée sur les fichiers AVANT de poser la question.
    → Si l'utilisateur veut corriger, propose de le faire maintenant. Si non, passe à la suite.
-2. "Maintenant la STRUCTURE & IMPACT 🗂️🎯 : L'ordre des sections est-il logique ? Si tu étais recruteur, ça te donnerait envie de prendre contact ?"
-   → Commente l'enchaînement et donne ton impression globale.
+2. "Maintenant la STRUCTURE & IMPACT 🗂️🎯 : Relis l'enchaînement dans ton navigateur. L'ordre des sections est-il logique ? Si tu étais recruteur, ça te donnerait envie de prendre contact ?"
+   → Commente l'enchaînement et donne ton impression basée sur les fichiers.
    → Si doutes, invite à ajuster. Sinon :
 "Parfait ! Ton CV est prêt pour le grand saut 🚀 Dis-moi 'Je suis satisfait !' et on passe à la mise en ligne."
 -->
@@ -845,7 +846,9 @@ Ne présente cette étape qu'après validation du CHECKPOINT Étape 7.
 Avant tout `git push`, vérifie l'authentification avec `gh auth status`.
 Si non connecté, guide l'utilisateur avec `gh auth login` (protocole HTTPS, navigateur).
 Le repo existe déjà (créé à l'étape 2). Fais simplement un `git add .`, `git commit` et `git push`.
-Après le déploiement Netlify, rappelle au user de vérifier que les images ET le chatbot fonctionnent sur le site en ligne.
+Après le déploiement Netlify, DEMANDE AU USER de vérifier LUI-MÊME dans son navigateur
+que les images ET le chatbot fonctionnent sur le site en ligne.
+Ne vérifie PAS toi-même avec le navigateur intégré.
 ================================================================
 -->
 
@@ -869,11 +872,14 @@ Tu as créé ta clé API à l'Étape 6.0 et elle fonctionne déjà en local. Pou
 > [!TIP]
 > **Tu ne retrouves plus ta clé ?** Retourne sur [Google AI Studio](https://aistudio.google.com/) → **Get API key** pour la retrouver ou en créer une nouvelle.
 
-> [!IMPORTANT]
-> **Dernier conseil avant la mise en ligne 🚀**
-> Comme vu à l'Étape 6.0.bis, si ton CV s'adresse à de vrais recruteurs ou clients, c'est le moment idéal pour associer une carte bancaire à ton compte Google AI Studio ("Pay-as-you-go").
-> - **Le coût est dérisoire** : Tu ne paies qu'à l'usage. Pour un trafic de CV classique, cela dépasse rarement quelques centimes à 1 ou 2 euros par mois.
-> - **La garantie** : Tes données (et celles du recruteur) restent privées, et le chatbot sera toujours rapide et fiable.
+> [!WARNING]
+> **⚠️ Clé gratuite → Clé payante : c'est le moment !**
+>
+> Ton CV va être vu par de **vrais recruteurs et clients**. Rappelle-toi le tableau de l'Étape 6.0 :
+> - En **gratuit** : lenteurs possibles + Google peut lire les conversations
+> - En **payant** (quelques centimes/mois) : rapide, fiable et données privées
+>
+> **Comment faire ?** Va sur [Google AI Studio](https://aistudio.google.com/) → paramètres de facturation → associe une carte bancaire (Pay-as-you-go). Ta clé API reste la même, seul le mode de facturation change.
 
 ### 8.2 — Publier ton code sur GitHub
 
